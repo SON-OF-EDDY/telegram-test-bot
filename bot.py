@@ -330,7 +330,7 @@ def start(message):
     elif user_is_in_database(telegram_id):
         markup_reply.add(*row6)
 
-    msg = bot.send_message(message.chat.id, "Don't know what to watch? Let me help! Choose a button from the menu!",
+    msg = bot.send_message(message.chat.id, "Don't know what to watch? Let me help! Choose a button from the menu! /subscribe or /buy to unlock more features",
                    reply_markup=markup_reply
                    )
 
@@ -476,7 +476,7 @@ def handle_start_response(message):
       elif user_is_in_database(telegram_id):
           markup_reply.add(*row6)
 
-      msg = bot.send_message(message.chat.id, "Don't know what to watch? Let me help! Choose a button from the menu!",
+      msg = bot.send_message(message.chat.id, "Don't know what to watch? Let me help! Choose a button from the menu! /subscribe or /buy to unlock more features",
                              reply_markup=markup_reply
                              )
 
