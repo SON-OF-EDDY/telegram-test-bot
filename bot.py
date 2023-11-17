@@ -195,7 +195,7 @@ def buy(message):
             msg = bot.send_message(message.chat.id, f"You already have a lifetime membership.")
 
     else:
-        msg = bot.send_message(message.chat.id, f"Please subscribe first, then try again.")
+        msg = bot.send_message(message.chat.id, f"Please /subscribe first, then try again.")
 
 #pre checkout
 @bot.pre_checkout_query_handler(lambda query:True)
