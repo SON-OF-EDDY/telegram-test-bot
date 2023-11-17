@@ -127,7 +127,7 @@ def subscribe(message):
 
         adventure_search = KeyboardButton(text='Adventure Shows')
         fantasy_search = KeyboardButton(text='Fantasy Shows')
-        documentary_search = KeyboardButton(text='Documentaries')
+        documentary_search = KeyboardButton(text='Documentary')
 
         game_show_search = KeyboardButton(text='Talk Shows')
         romance_search = KeyboardButton(text='Romance Shows')
@@ -241,7 +241,7 @@ Provider Payment Charge ID: {message.successful_payment.provider_payment_charge_
 
         adventure_search = KeyboardButton(text='Adventure Shows')
         fantasy_search = KeyboardButton(text='Fantasy Shows')
-        documentary_search = KeyboardButton(text='Documentaries')
+        documentary_search = KeyboardButton(text='Documentary')
 
         game_show_search = KeyboardButton(text='Talk Shows')
         romance_search = KeyboardButton(text='Romance Shows')
@@ -298,7 +298,7 @@ def start(message):
 
     adventure_search = KeyboardButton(text='Adventure Shows')
     fantasy_search = KeyboardButton(text='Fantasy Shows')
-    documentary_search = KeyboardButton(text='Documentaries')
+    documentary_search = KeyboardButton(text='Documentary')
 
     game_show_search = KeyboardButton(text='Talk Shows')
     romance_search = KeyboardButton(text='Romance Shows')
@@ -386,7 +386,7 @@ def handle_start_response(message):
   elif message.text == 'Sci-Fi Shows':
       find_five_genre_shows(message,genre='Sci-Fi')
 
-  elif message.text == 'Documentaries':
+  elif message.text == 'Documentary':
       find_five_genre_shows(message, genre='Documentary')
 
   elif message.text == 'Comedy Shows':
@@ -444,7 +444,7 @@ def handle_start_response(message):
 
       adventure_search = KeyboardButton(text='Adventure Shows')
       fantasy_search = KeyboardButton(text='Fantasy Shows')
-      documentary_search = KeyboardButton(text='Documentaries')
+      documentary_search = KeyboardButton(text='Documentary')
 
       game_show_search = KeyboardButton(text='Talk Shows')
       romance_search = KeyboardButton(text='Romance Shows')
