@@ -103,112 +103,124 @@ PRICE = LabeledPrice(label='Lifetime Subscription',amount=10*100)
 # SUBSCRIPTION STUFF
 @bot.message_handler(commands=['subscribe'], content_types=['text'])
 def subscribe(message):
-    telegram_id = message.from_user.id
-    is_already_user = user_is_in_database(telegram_id)
-    if is_already_user:
-        msg = bot.send_message(message.chat.id, f"You are already subscribed to the TVShowFinderBot")
-    else:
-        add_user(telegram_id=telegram_id)
-        #msg = bot.send_message(message.chat.id, f"You have successfully subscribed to the TVShowFinderBot")
-        # refreshing the button menu...
-        markup_reply = ReplyKeyboardMarkup(resize_keyboard=True)
-        #
-        # Trending TV shows in general
-        item_search = KeyboardButton(text='Find Trending Shows')
 
-        # Trending TV shows by genre
-        horror_search = KeyboardButton(text='Horror Shows')
-        scifi_search = KeyboardButton(text='Sci-Fi Shows')
-        comedy_search = KeyboardButton(text='Comedy Shows')
+    try:
+        telegram_id = message.from_user.id
+        is_already_user = user_is_in_database(telegram_id)
+        if is_already_user:
+            msg = bot.send_message(message.chat.id, f"You are already subscribed to the TVShowFinderBot")
+        else:
+            add_user(telegram_id=telegram_id)
+            #msg = bot.send_message(message.chat.id, f"You have successfully subscribed to the TVShowFinderBot")
+            # refreshing the button menu...
+            markup_reply = ReplyKeyboardMarkup(resize_keyboard=True)
+            #
+            # Trending TV shows in general
+            item_search = KeyboardButton(text='Find Trending Shows')
 
-        action_search = KeyboardButton(text='Action Shows')
-        animation_search = KeyboardButton(text='Animation Shows')
-        drama_search = KeyboardButton(text='Drama Shows')
+            # Trending TV shows by genre
+            horror_search = KeyboardButton(text='Horror Shows')
+            scifi_search = KeyboardButton(text='Sci-Fi Shows')
+            comedy_search = KeyboardButton(text='Comedy Shows')
 
-        adventure_search = KeyboardButton(text='Adventure Shows')
-        fantasy_search = KeyboardButton(text='Fantasy Shows')
-        documentary_search = KeyboardButton(text='Documentary')
+            action_search = KeyboardButton(text='Action Shows')
+            animation_search = KeyboardButton(text='Animation Shows')
+            drama_search = KeyboardButton(text='Drama Shows')
 
-        game_show_search = KeyboardButton(text='Talk Shows')
-        romance_search = KeyboardButton(text='Romance Shows')
-        family_search = KeyboardButton(text='Family Shows')
+            adventure_search = KeyboardButton(text='Adventure Shows')
+            fantasy_search = KeyboardButton(text='Fantasy Shows')
+            documentary_search = KeyboardButton(text='Documentary')
 
-        # Trending movies in general
-        movie_search = KeyboardButton(text='Find Random Popular Movies')
+            game_show_search = KeyboardButton(text='Talk Shows')
+            romance_search = KeyboardButton(text='Romance Shows')
+            family_search = KeyboardButton(text='Family Shows')
 
-        # Trending videogames in general
-        video_game_search = KeyboardButton(text='Find Random Popular Video Games')
+            # Trending movies in general
+            movie_search = KeyboardButton(text='Find Random Popular Movies')
 
-        row1 = [item_search]
-        row2 = [horror_search, scifi_search, documentary_search]
-        row3 = [comedy_search, action_search, animation_search]
-        row4 = [drama_search, adventure_search, fantasy_search]
-        row5 = [game_show_search, romance_search, family_search]
-        row6 = [movie_search]
-        row7 = [video_game_search]
+            # Trending videogames in general
+            video_game_search = KeyboardButton(text='Find Random Popular Video Games')
 
-        markup_reply.add(*row1)
+            row1 = [item_search]
+            row2 = [horror_search, scifi_search, documentary_search]
+            row3 = [comedy_search, action_search, animation_search]
+            row4 = [drama_search, adventure_search, fantasy_search]
+            row5 = [game_show_search, romance_search, family_search]
+            row6 = [movie_search]
+            row7 = [video_game_search]
 
-        if is_lifetime_member(telegram_id=telegram_id):
-            markup_reply.add(*row2)
-            markup_reply.add(*row3)
-            markup_reply.add(*row4)
-            markup_reply.add(*row5)
-            markup_reply.add(*row6)
-            markup_reply.add(*row7)
-        elif user_is_in_database(telegram_id):
-            markup_reply.add(*row6)
-        msg = bot.send_message(message.chat.id, "You have successfully subscribed to the TVShowFinderBot. You can now search for popular movies.",
-                               reply_markup=markup_reply
-                               )
+            markup_reply.add(*row1)
+
+            if is_lifetime_member(telegram_id=telegram_id):
+                markup_reply.add(*row2)
+                markup_reply.add(*row3)
+                markup_reply.add(*row4)
+                markup_reply.add(*row5)
+                markup_reply.add(*row6)
+                markup_reply.add(*row7)
+            elif user_is_in_database(telegram_id):
+                markup_reply.add(*row6)
+            msg = bot.send_message(message.chat.id, "You have successfully subscribed to the TVShowFinderBot. You can now search for popular movies.",
+                                   reply_markup=markup_reply
+                                   )
+    except:
+        msg = bot.send_message(message.chat.id, f"Error trying to subscribe.")
 ##################################################################################################################
 
 @bot.message_handler(commands=['buy'], content_types=['text'])
 def buy(message):
-    telegram_id = message.from_user.id
-    # check subscribed status
-    if user_is_in_database(telegram_id):
-        print('user subscribed and in database')
-        # check lifetime status
-        is_user_already_lifetime_member = is_lifetime_member(telegram_id)
-        print(f"user is already a lifetime member: {is_user_already_lifetime_member}")
+    try:
+        telegram_id = message.from_user.id
+        # check subscribed status
+        if user_is_in_database(telegram_id):
+            print('user subscribed and in database')
+            # check lifetime status
+            is_user_already_lifetime_member = is_lifetime_member(telegram_id)
+            print(f"user is already a lifetime member: {is_user_already_lifetime_member}")
 
-        if not is_user_already_lifetime_member:
+            if not is_user_already_lifetime_member:
 
-            msg = bot.send_message(message.chat.id, f"Use 4242 4242 4242 4242 as the debit card number. Any valid date. Any three digits for CVV.")
+                msg = bot.send_message(message.chat.id, f"Use 4242 4242 4242 4242 as the debit card number. Any valid date. Any three digits for CVV.")
 
-            bot.send_invoice(message.chat.id,
-                             title='Lifetime Subscription',
-                             description='One time payment for unlimited access to all bot features',
-                             provider_token='1744374395:TEST:dd78934ceacd8789b8b2',
-                             currency="RUB",
-                             photo_url="https://media.npr.org/assets/img/2023/05/25/2023summerfilmtvpreview-copy_wide-ec66db18be9a0f2b5512c34448cf3bb3354b7c5f-s1100-c50.jpg",
-                             prices=[PRICE],
-                             photo_width=416,
-                             photo_height=234,
-                             photo_size=416,
-                             is_flexible=False,
-                             start_parameter='Receipt',
-                             invoice_payload='test-invoice-payload'
-                             )
+                bot.send_invoice(message.chat.id,
+                                 title='Lifetime Subscription',
+                                 description='One time payment for unlimited access to all bot features',
+                                 provider_token='1744374395:TEST:dd78934ceacd8789b8b2',
+                                 currency="RUB",
+                                 photo_url="https://media.npr.org/assets/img/2023/05/25/2023summerfilmtvpreview-copy_wide-ec66db18be9a0f2b5512c34448cf3bb3354b7c5f-s1100-c50.jpg",
+                                 prices=[PRICE],
+                                 photo_width=416,
+                                 photo_height=234,
+                                 photo_size=416,
+                                 is_flexible=False,
+                                 start_parameter='Receipt',
+                                 invoice_payload='test-invoice-payload'
+                                 )
+            else:
+                msg = bot.send_message(message.chat.id, f"You already have a lifetime membership.")
+
         else:
-            msg = bot.send_message(message.chat.id, f"You already have a lifetime membership.")
-
-    else:
-        msg = bot.send_message(message.chat.id, f"Please /subscribe first, then try again.")
+            msg = bot.send_message(message.chat.id, f"Please /subscribe first, then try again.")
+    except:
+        msg = bot.send_message(message.chat.id, f"Error trying to buy membership.")
 
 #pre checkout
 @bot.pre_checkout_query_handler(lambda query:True)
 def pre_checkout_query(pre_checkout_q:PreCheckoutQuery):
-    bot.answer_pre_checkout_query(int(pre_checkout_q.id),ok=True)
+    try:
+        bot.answer_pre_checkout_query(int(pre_checkout_q.id),ok=True)
+    except:
+        pass
+
 
 #successful payment
 @bot.message_handler(content_types=['successful_payment'])
 def got_payment(message: Message):
-    telegram_id = message.from_user.id
-    result = give_lifetime_membership(telegram_id=telegram_id)
-    if result:
-        bot.send_message(message.chat.id,
+    try:
+        telegram_id = message.from_user.id
+        result = give_lifetime_membership(telegram_id=telegram_id)
+        if result:
+            bot.send_message(message.chat.id,
 f'''             
 Payment Successful.
 
@@ -224,57 +236,59 @@ Telegram Payment Charge ID: {message.successful_payment.telegram_payment_charge_
 
 Provider Payment Charge ID: {message.successful_payment.provider_payment_charge_id}
 ''')
-        #refreshing the button menu...
-        markup_reply = ReplyKeyboardMarkup(resize_keyboard=True)
-        #
-        # Trending TV shows in general
-        item_search = KeyboardButton(text='Find Trending Shows')
+            #refreshing the button menu...
+            markup_reply = ReplyKeyboardMarkup(resize_keyboard=True)
+            #
+            # Trending TV shows in general
+            item_search = KeyboardButton(text='Find Trending Shows')
 
-        # Trending TV shows by genre
-        horror_search = KeyboardButton(text='Horror Shows')
-        scifi_search = KeyboardButton(text='Sci-Fi Shows')
-        comedy_search = KeyboardButton(text='Comedy Shows')
+            # Trending TV shows by genre
+            horror_search = KeyboardButton(text='Horror Shows')
+            scifi_search = KeyboardButton(text='Sci-Fi Shows')
+            comedy_search = KeyboardButton(text='Comedy Shows')
 
-        action_search = KeyboardButton(text='Action Shows')
-        animation_search = KeyboardButton(text='Animation Shows')
-        drama_search = KeyboardButton(text='Drama Shows')
+            action_search = KeyboardButton(text='Action Shows')
+            animation_search = KeyboardButton(text='Animation Shows')
+            drama_search = KeyboardButton(text='Drama Shows')
 
-        adventure_search = KeyboardButton(text='Adventure Shows')
-        fantasy_search = KeyboardButton(text='Fantasy Shows')
-        documentary_search = KeyboardButton(text='Documentary')
+            adventure_search = KeyboardButton(text='Adventure Shows')
+            fantasy_search = KeyboardButton(text='Fantasy Shows')
+            documentary_search = KeyboardButton(text='Documentary')
 
-        game_show_search = KeyboardButton(text='Talk Shows')
-        romance_search = KeyboardButton(text='Romance Shows')
-        family_search = KeyboardButton(text='Family Shows')
+            game_show_search = KeyboardButton(text='Talk Shows')
+            romance_search = KeyboardButton(text='Romance Shows')
+            family_search = KeyboardButton(text='Family Shows')
 
-        # Trending movies in general
-        movie_search = KeyboardButton(text='Find Random Popular Movies')
+            # Trending movies in general
+            movie_search = KeyboardButton(text='Find Random Popular Movies')
 
-        # Trending videogames in general
-        video_game_search = KeyboardButton(text='Find Random Popular Video Games')
+            # Trending videogames in general
+            video_game_search = KeyboardButton(text='Find Random Popular Video Games')
 
-        row1 = [item_search]
-        row2 = [horror_search, scifi_search, documentary_search]
-        row3 = [comedy_search, action_search, animation_search]
-        row4 = [drama_search, adventure_search, fantasy_search]
-        row5 = [game_show_search, romance_search, family_search]
-        row6 = [movie_search]
-        row7 = [video_game_search]
+            row1 = [item_search]
+            row2 = [horror_search, scifi_search, documentary_search]
+            row3 = [comedy_search, action_search, animation_search]
+            row4 = [drama_search, adventure_search, fantasy_search]
+            row5 = [game_show_search, romance_search, family_search]
+            row6 = [movie_search]
+            row7 = [video_game_search]
 
-        markup_reply.add(*row1)
+            markup_reply.add(*row1)
 
-        if is_lifetime_member(telegram_id=telegram_id):
-            markup_reply.add(*row2)
-            markup_reply.add(*row3)
-            markup_reply.add(*row4)
-            markup_reply.add(*row5)
-            markup_reply.add(*row6)
-            markup_reply.add(*row7)
-        elif user_is_in_database(telegram_id):
-            markup_reply.add(*row6)
-        msg = bot.send_message(message.chat.id, "You now have permanent access to all bot features:",
-                               reply_markup=markup_reply
-                               )
+            if is_lifetime_member(telegram_id=telegram_id):
+                markup_reply.add(*row2)
+                markup_reply.add(*row3)
+                markup_reply.add(*row4)
+                markup_reply.add(*row5)
+                markup_reply.add(*row6)
+                markup_reply.add(*row7)
+            elif user_is_in_database(telegram_id):
+                markup_reply.add(*row6)
+            msg = bot.send_message(message.chat.id, "You now have permanent access to all bot features:",
+                                   reply_markup=markup_reply
+                                   )
+    except:
+        msg = bot.send_message(message.chat.id, f"Error trying to process payment.")
 
 
 @bot.message_handler(commands=['start'], content_types=['text'])
