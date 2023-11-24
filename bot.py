@@ -79,7 +79,7 @@ def give_lifetime_membership(telegram_id):
         cursor.execute('UPDATE users SET is_lifetime_member = 1 WHERE user_id = ?', (telegram_id,))
         conn.commit()
         conn.close()
-        print('lifetime membership granted!')
+        #print('lifetime membership granted!')
         return True
 
     else:
@@ -173,10 +173,10 @@ def buy(message):
         telegram_id = message.from_user.id
         # check subscribed status
         if user_is_in_database(telegram_id):
-            print('user subscribed and in database')
+            #print('user subscribed and in database')
             # check lifetime status
             is_user_already_lifetime_member = is_lifetime_member(telegram_id)
-            print(f"user is already a lifetime member: {is_user_already_lifetime_member}")
+            #print(f"user is already a lifetime member: {is_user_already_lifetime_member}")
 
             if not is_user_already_lifetime_member:
 
