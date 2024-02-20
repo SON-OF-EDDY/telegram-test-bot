@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 import re
 import random
 import sqlite3
-from gtts import gTTS
-import os
+# from gtts import gTTS
+# import os
 ########################################################################
 # add auto send word of the day at some time ... (for those subscribed)...
 # add audio clip for word of the day
