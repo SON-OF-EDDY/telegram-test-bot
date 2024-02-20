@@ -427,8 +427,8 @@ def handle_start_response(message):
   elif message.text == 'Find Random Popular Movies':
       find_five_random_movies(message)
 
-  elif message.text == 'Talk Shows':
-      find_five_genre_shows(message,genre='talk-show')
+  elif message.text == 'War':
+      find_five_genre_shows(message,genre='War')
 
   elif message.text == 'Romance Shows':
       find_five_genre_shows(message,genre='Romance')
