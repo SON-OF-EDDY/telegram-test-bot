@@ -648,7 +648,6 @@ def tv_database_lookup(show_name):
 ########################################################################
 # BEAUTIFUL SOUP STUFF
 
-
 def imdb_top_trending_videogames(num_results):
 
     url = "https://m.imdb.com/search/title/?title_type=video_game"
@@ -675,30 +674,40 @@ def imdb_top_trending_videogames(num_results):
     try:
         for summary_item in summary_items:
 
-            text_box = summary_item.find('h3', class_='ipc-title__text').text
-            text_box = re.sub('^[0-9]+\.\s*', '', text_box)
-            list_of_titles.append(text_box)
+            try:
+                text_box = summary_item.find('h3', class_='ipc-title__text').text
+                text_box = re.sub('^[0-9]+\.\s*', '', text_box)
+                list_of_titles.append(text_box)
+            except:
+                list_of_titles.append('New Game')
 
-            description = summary_item.find(class_='ipc-html-content-inner-div').text
-            list_of_descriptions.append(description)
+            try:
+                description = summary_item.find(class_='ipc-html-content-inner-div').text
+                list_of_descriptions.append(description)
+            except:
+                list_of_descriptions.append('A cool game which you should definitely check out!!!')
 
-            image_container = summary_item.find(class_="ipc-image")
-            srcset_attribute = image_container.get('srcset')
-            all_sources = srcset_attribute.split(sep=',')
-
-            if all_sources[-4]:
-                list_of_sources.append(all_sources[-4])
-            else:
+            try:
+                image_container = summary_item.find(class_="ipc-image")
+                srcset_attribute = image_container.get('srcset')
+                all_sources = srcset_attribute.split(sep=',')
                 list_of_sources.append(all_sources[0])
+            except:
+                list_of_sources.append('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png')
+
+
         combined_lists = list(zip(list_of_titles, list_of_sources, list_of_descriptions))
 
         random.shuffle(combined_lists)
 
         combined_lists = combined_lists[:num_results]
 
+        print(combined_lists)
+
         return combined_lists
     except:
         return []
+
 
 def imdb_top_trending_movies(num_results):
 
