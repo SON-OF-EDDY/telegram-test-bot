@@ -5,8 +5,11 @@ from bs4 import BeautifulSoup
 import re
 import random
 import sqlite3
+from gtts import gTTS
+import os
 ########################################################################
-#
+# add auto send word of the day at some time ... (for those subscribed)...
+# add audio clip for word of the day
 def add_user(telegram_id,is_lifetime_member=False):
 
     conn = sqlite3.connect('user_data.db')
@@ -131,7 +134,7 @@ def subscribe(message):
             fantasy_search = KeyboardButton(text='Fantasy Shows')
             documentary_search = KeyboardButton(text='Documentary')
 
-            game_show_search = KeyboardButton(text='Talk Shows')
+            war_search = KeyboardButton(text='War')
             romance_search = KeyboardButton(text='Romance Shows')
             family_search = KeyboardButton(text='Family Shows')
 
@@ -145,7 +148,7 @@ def subscribe(message):
             row2 = [horror_search, scifi_search, documentary_search]
             row3 = [comedy_search, action_search, animation_search]
             row4 = [drama_search, adventure_search, fantasy_search]
-            row5 = [game_show_search, romance_search, family_search]
+            row5 = [war_search, romance_search, family_search]
             row6 = [movie_search]
             row7 = [video_game_search]
 
@@ -255,7 +258,7 @@ Provider Payment Charge ID: {message.successful_payment.provider_payment_charge_
             fantasy_search = KeyboardButton(text='Fantasy Shows')
             documentary_search = KeyboardButton(text='Documentary')
 
-            game_show_search = KeyboardButton(text='Talk Shows')
+            war_search = KeyboardButton(text='War')
             romance_search = KeyboardButton(text='Romance Shows')
             family_search = KeyboardButton(text='Family Shows')
 
@@ -269,7 +272,7 @@ Provider Payment Charge ID: {message.successful_payment.provider_payment_charge_
             row2 = [horror_search, scifi_search, documentary_search]
             row3 = [comedy_search, action_search, animation_search]
             row4 = [drama_search, adventure_search, fantasy_search]
-            row5 = [game_show_search, romance_search, family_search]
+            row5 = [war_search, romance_search, family_search]
             row6 = [movie_search]
             row7 = [video_game_search]
 
@@ -314,7 +317,7 @@ def start(message):
     fantasy_search = KeyboardButton(text='Fantasy Shows')
     documentary_search = KeyboardButton(text='Documentary')
 
-    game_show_search = KeyboardButton(text='Talk Shows')
+    war_search = KeyboardButton(text='War')
     romance_search = KeyboardButton(text='Romance Shows')
     family_search = KeyboardButton(text='Family Shows')
 
@@ -328,7 +331,7 @@ def start(message):
     row2 = [horror_search, scifi_search, documentary_search]
     row3 = [comedy_search, action_search, animation_search]
     row4 = [drama_search, adventure_search, fantasy_search]
-    row5 = [game_show_search, romance_search, family_search]
+    row5 = [war_search, romance_search, family_search]
     row6 = [movie_search]
     row7 = [video_game_search]
 
@@ -460,7 +463,7 @@ def handle_start_response(message):
       fantasy_search = KeyboardButton(text='Fantasy Shows')
       documentary_search = KeyboardButton(text='Documentary')
 
-      game_show_search = KeyboardButton(text='Talk Shows')
+      war_search = KeyboardButton(text='War')
       romance_search = KeyboardButton(text='Romance Shows')
       family_search = KeyboardButton(text='Family Shows')
 
@@ -474,7 +477,7 @@ def handle_start_response(message):
       row2 = [horror_search, scifi_search, documentary_search]
       row3 = [comedy_search, action_search, animation_search]
       row4 = [drama_search, adventure_search, fantasy_search]
-      row5 = [game_show_search, romance_search, family_search]
+      row5 = [war_search, romance_search, family_search]
       row6 = [movie_search]
       row7 = [video_game_search]
 
